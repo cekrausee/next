@@ -1,0 +1,36 @@
+{
+  "name": "@cekrause/next",
+  "version": "0.0.1",
+  "description": "An utility package to bootstrap a Next.js project.",
+  "main": "src/cli.ts",
+  "bin": {
+    "next": "src/cli.ts"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "bun build src/cli.ts --target=bun --outdir=dist",
+    "prepublishOnly": "bun run build",
+    "bump:major": "npm version major -m 'chore(release): v%s' && git push --follow-tags",
+    "bump:minor": "npm version minor -m 'chore(release): v%s' && git push --follow-tags",
+    "bump:patch": "npm version patch -m 'chore(release): v%s' && git push --follow-tags"
+  },
+  "repository": "https://github.com/cekrausee/next",
+  "author": {
+    "name": "cekrause",
+    "email": "henriquekrause23@gmail.com",
+    "url": "https://github.com/cekrausee"
+  },
+  "keywords": [
+    "bootstrap",
+    "next.js"
+  ],
+  "license": "MIT",
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  }
+}
