@@ -13,9 +13,12 @@ const askProjectName = async () => {
   const name = await readline.question('What is the name of your project? ')
 
   if (!name) {
-    console.warn('Invalid project name.')
+    console.warn('Invalid project name.\n')
     return askProjectName()
   }
+
+  console.log()
+
   return name.trim().replace(/\s+/g, '-')
 }
 
@@ -46,8 +49,7 @@ To start the development server, run:
 1. cd ${projectName}
 2. npm run db:start
 3. npm run db:push
-2. npm run dev
-`)
+2. npm run dev`)
 
   process.exit(0)
 }
