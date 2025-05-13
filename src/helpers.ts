@@ -1,24 +1,6 @@
 import { spawn as bunSpawn } from 'bun'
-import { readdir } from 'node:fs/promises'
 
 export const spawn = (commands: string[]) => bunSpawn(commands, { stdio: ['ignore', 'ignore', 'ignore'] })
-export const getProjectName = () => process.argv[2] ?? null
-
-export const processProjectName = async (name: string | null) => {
-  if (!name) {
-    console.warn('Please, provide a project name.')
-    process.exit(1)
-  }
-
-  const dir = await readdir('.')
-
-  if (dir.includes(name)) {
-    console.warn(`Conflict: a register with the name "${name}" already exists.`)
-    process.exit(1)
-  }
-
-  return name
-}
 
 export const generateProjectSecrets = (secret?: string) => `BASE_URL=http://localhost:3000
 
@@ -52,18 +34,3 @@ node -e "console.log(crypto.randomBytes(32).toString('base64url'))"
 docker run --name ${projectName}-db -e POSTGRES_USER=root -e POSTGRES_PASSWORD=dev -p 5432:5432 -d postgres:latest
 \`\`\`
 `
-
-export const finishSetup = async (projectName: string) => {
-  console.log(`
-Project setup complete.
-
-To start the development server, run:
-
-1. cd ${projectName}
-2. npm run db:start
-3. npm run db:push
-2. npm run dev
-`)
-
-  process.exit(0)
-}
