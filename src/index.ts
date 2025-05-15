@@ -1,4 +1,4 @@
-import { file, write } from 'bun'
+import { file, spawnSync, write } from 'bun'
 import { mkdir, rm } from 'node:fs/promises'
 import { initProjectApi } from './api'
 import { initProjectApp } from './app'
@@ -23,13 +23,9 @@ const cd = (directory: string) => {
   process.chdir(directory)
 }
 
-const installProjectDependencies = async () => {
-  const processes = [
-    spawn(['npm', 'install', 'drizzle-orm', 'pg', '@vercel/postgres', '@paralleldrive/cuid2', 'dotenv', 'next-auth@beta', 'zod']),
-    spawn(['npm', 'install', '-D', 'drizzle-kit', 'tailwind-merge', 'clsx', 'tw-animate-css', '@types/pg', 'prettier-plugin-tailwindcss'])
-  ]
-
-  for (const process of processes) await process.exited
+const installProjectDependencies = () => {
+  spawnSync(['npm', 'install', 'drizzle-orm', 'pg', '@vercel/postgres', '@paralleldrive/cuid2', 'dotenv', 'next-auth@beta', 'zod'])
+  spawnSync(['npm', 'install', '-D', 'drizzle-kit', 'tailwind-merge', 'clsx', 'tw-animate-css', '@types/pg', 'prettier-plugin-tailwindcss'])
 }
 
 const mkProjectLib = async () => {
@@ -97,7 +93,8 @@ const writeProjectReadme = async (projectName: string) => {
 }
 
 const prepareProject = async (projectName: string, containerName: string) => {
-  await Promise.all([installProjectDependencies(), initProjectStructure()])
+  installProjectDependencies()
+  await initProjectStructure()
 
   await Promise.all([
     rewriteProjectPackage(containerName),
