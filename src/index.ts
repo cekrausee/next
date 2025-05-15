@@ -29,7 +29,7 @@ const installProjectDependencies = async () => {
     spawn(['npm', 'install', '-D', 'drizzle-kit', 'tailwind-merge', 'clsx', 'tw-animate-css', '@types/pg', 'prettier-plugin-tailwindcss'])
   ]
 
-  await Promise.all(processes.map((process) => process.exited))
+  for (const process of processes) await process.exited
 }
 
 const mkProjectLib = async () => {
