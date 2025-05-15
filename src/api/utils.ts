@@ -5,7 +5,7 @@ import { decode } from 'next-auth/jwt'
 import { cookies } from 'next/headers'
 import { NextRequest } from 'next/server'
 import { z } from 'zod'
-import { retrieveRawUserAction } from './user'
+import { findRawUserAction } from './user'
 
 type Request = { body?: unknown; external?: boolean; authorize?: boolean } & Omit<RequestInit, 'body'>
 
@@ -46,7 +46,7 @@ export const unmountRequest = async (req: NextRequest) => {
   if (!parse.success) return {}
 
   try {
-    const user = await retrieveRawUserAction(parse.data.userId)
+    const user = await findRawUserAction(parse.data.userId)
     return user ? { user } : {}
   } catch {
     return {}
