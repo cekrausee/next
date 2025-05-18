@@ -25,7 +25,20 @@ const cd = (directory: string) => {
 
 const installProjectDependencies = () => {
   spawnSync(['npm', 'install', 'drizzle-orm', 'pg', '@vercel/postgres', '@paralleldrive/cuid2', 'dotenv', 'next-auth@beta', 'zod'])
-  spawnSync(['npm', 'install', '-D', 'drizzle-kit', 'tailwind-merge', 'clsx', 'tw-animate-css', '@types/pg', 'prettier-plugin-tailwindcss'])
+
+  spawnSync([
+    'npm',
+    'install',
+    '-D',
+    'drizzle-kit',
+    'tailwind-merge',
+    'tw-animate-css',
+    'class-variance-authority',
+    'clsx',
+    'lucide-react',
+    'prettier-plugin-tailwindcss',
+    '@types/pg'
+  ])
 }
 
 const mkProjectLib = async () => {
